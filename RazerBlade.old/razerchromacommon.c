@@ -3,8 +3,6 @@
 //  RazerBlade
 //
 
-#include <string.h>
-
 #include "razercommon.h"
 #include "razerchromacommon.h"
 

@@ -4,8 +4,7 @@
 //
 //  Based on Linux razer-driver kernel drivers: https://github.com/terrycain/razer-drivers/blob/master/driver/razercommon.h
 //
-#include <stdio.h>
-#include <string.h>
+
 #include "razercommon.h"
 
 /**
@@ -120,7 +119,6 @@ unsigned char razer_calculate_crc(struct razer_report *report) {
     
     return crc;
 }
-
 
 /**
  * Clamp a value to a min,max
