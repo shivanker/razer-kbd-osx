@@ -1,5 +1,5 @@
 # osx-razer-blade
-Command-line application to control lights on Razer Blade that are running a Hackintosh (macOS on a non-Apple device). Successfully tested so far on a Razer Blade Stealth (Late 2017). The driver sshould support older and new Razer laptops as well. It supports various effects on the keyboard and the ability to turn the Razer logo on and off.
+Command-line application to control lights on Razer Blade that are running a Hackintosh (macOS on a non-Apple device). Successfully tested so far on a Razer Blade Stealth (Late 2017). The driver should work with older and new Razer laptops as well. It supports various effects on the keyboard and the ability to turn the monitor Razer logo on and off.
 
 This simple application builds on the porting work by @kprinssu and their https://github.com/kprinssu/osx-razer-blade project. The Razer driver was adapted from the Linux project, https://github.com/terrycain/razer-drivers/.
 
@@ -8,9 +8,10 @@ Only the Xcode command-line tools are needed to build and run this project. Inst
     xcode-select --install
 
 Usage:
+
 1. Clone the repo
-2. Build the project by going into the `RazerBlade` directory and typing `make`.
-3. Run the `razer-led` program to get the effect you want.
+2. Build the project by typing `make`
+3. Run the `osx-razer-led` program to get the effect you want.
 
 Currently supported effects:
 
