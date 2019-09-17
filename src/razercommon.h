@@ -105,9 +105,13 @@ struct razer_report {
 };
 
 IOReturn razer_send_control_msg(IOUSBDeviceInterface **dev, void const *data, uint report_index);
-IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report);
-struct razer_report get_razer_report(unsigned char command_class, unsigned char command_id, unsigned char data_size);
+IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report, int wait_min);
 unsigned char razer_calculate_crc(struct razer_report *report);
+struct razer_report get_razer_report(unsigned char command_class, unsigned char command_id, unsigned char data_size);
+struct razer_report get_empty_razer_report(void);
+
+
+// Convenience functions
 unsigned char clamp_u8(unsigned char value, unsigned char min, unsigned char max);
 unsigned short clamp_u16(unsigned short value, unsigned short min, unsigned short max);
 

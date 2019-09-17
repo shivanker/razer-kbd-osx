@@ -63,6 +63,13 @@
 #define RAZER_STEALTH_ROW_LEN 0x10
 #define RAZER_STEALTH_ROWS_NUM 6
 
+#define RAZER_BLACKWIDOW_CHROMA_WAIT_MS 1
+#define RAZER_BLACKWIDOW_CHROMA_WAIT_MIN_US 600
+#define RAZER_BLACKWIDOW_CHROMA_WAIT_MAX_US 800
+
+#define RAZER_FIREFLY_WAIT_MIN_US 900
+#define RAZER_FIREFLY_WAIT_MAX_US 1000
+
 struct razer_kbd_device {
     struct IOUSBDeviceInterface **usbdev;
     unsigned int fn_on;

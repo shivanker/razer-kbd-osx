@@ -44,7 +44,7 @@ IOReturn razer_send_control_msg(IOUSBDeviceInterface **dev, void const *data, ui
  *
  * Returns kIOReturnSuccess when successful
  */
-IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report) {
+IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report, int wait_min) {
     IOReturn retval;
     char buffer[sizeof(struct razer_report)];
     
@@ -57,6 +57,8 @@ IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, s
         
         return retval;
     }
+
+    usleep(wait_min);
     
     IOUSBDevRequest request;
     
@@ -81,12 +83,12 @@ IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, s
     return retval;
 }
 
+
 /**
  * Get initialised razer report
  */
 struct razer_report get_razer_report(unsigned char command_class, unsigned char command_id, unsigned char data_size) {
-    struct razer_report new_report;
-    memset(&new_report, 0, sizeof(struct razer_report));
+    struct razer_report new_report = get_empty_razer_report();
     
     new_report.status = 0x00;
     new_report.transaction_id.id = 0xFF;
@@ -98,6 +100,18 @@ struct razer_report get_razer_report(unsigned char command_class, unsigned char 
     
     return new_report;
 }
+
+
+/**
+ * Get empty razer report
+ */
+struct razer_report get_empty_razer_report(void) {
+    struct razer_report new_report = {0};
+    memset(&new_report, 0, sizeof(struct razer_report));
+
+    return new_report;
+}
+
 
 /**
  * Calculate the checksum for the usb message
