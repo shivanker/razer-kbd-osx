@@ -6,6 +6,7 @@
 //
 #include <stdio.h>
 #include <string.h>
+
 #include "razercommon.h"
 
 /**
@@ -16,7 +17,7 @@
 IOReturn razer_send_control_msg(IOUSBDeviceInterface **dev, void const *data, uint report_index) {
     IOUSBDevRequest request;
     
-    request.bRequest = HID_REQ_SET_REPORT;
+    request.bRequest = HID_REQ_SET_REPORT; // 0x09
     request.bmRequestType = USB_TYPE_CLASS | USB_RECIP_INTERFACE | USB_DIR_OUT;
     request.wValue = 0x300;
     request.wIndex = report_index;

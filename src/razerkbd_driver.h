@@ -98,6 +98,7 @@ int razer_attr_write_mode_reactive(IOUSBDeviceInterface **usb_dev, const char *b
 int razer_attr_write_mode_static(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
 int razer_attr_write_mode_starlight(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
 int razer_attr_write_mode_breath(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
+int razer_attr_read_set_logo(IOUSBDeviceInterface **usb_dev, char *buf, int count);
 int razer_attr_write_set_logo(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
 int razer_attr_write_mode_custom(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
 int razer_attr_write_set_fn_toggle(IOUSBDeviceInterface **usb_dev, const char *buf, int count);

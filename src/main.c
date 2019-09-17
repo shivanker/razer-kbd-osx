@@ -89,7 +89,8 @@ const char* usageText = \
 	"   wave_left  - wave of colours moving left\n" \
 	"   wave_right - wave of colours moving right\n" \
 	"   logo_on    - Turn the Razer logo on\n" \
-	"   logo_off   - Turn the Razer logo off\n\n";
+	"   logo_off   - Turn the Razer logo off\n" \
+	"   get_logo   - Return the current logo state. 0 = off, 1 = on\n\n";
 
 int main(int argc, const char * argv[]) {
 	if (argc != 2) {
@@ -142,6 +143,10 @@ int main(int argc, const char * argv[]) {
 		razer_attr_write_set_logo(dev, "1", 1);
 	} else if (strcmp("logo_off", cmd) == 0) {
 		razer_attr_write_set_logo(dev, "0", 1);
+	} else if (strcmp("get_logo", cmd) == 0) {
+		char buf[16] = {0};
+		razer_attr_read_set_logo(dev, buf, 1);
+ 		printf("%s", buf);
 	} else {
 		printf("Unrecognized command -- %s\n", cmd);
 		printf("%s", usageText);

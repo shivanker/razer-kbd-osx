@@ -24,7 +24,6 @@
 #include "razerchromacommon.h"
 #include "razercommon.h"
 
-int razer_get_report(IOUSBDeviceInterface **usb_dev, struct razer_report *request_report, struct razer_report *response_report);
 struct razer_report razer_send_payload(IOUSBDeviceInterface **dev, struct razer_report *request_report);
 
 bool is_blade_laptop(IOUSBDeviceInterface **usb_dev) {
@@ -483,6 +482,48 @@ int razer_attr_write_mode_breath(IOUSBDeviceInterface **usb_dev, const char *buf
     return count;
 }
 
+
+int has_inverted_led_state(IOUSBDeviceInterface **usb_dev) {
+	UInt16 product = -1;
+    (*usb_dev)->GetDeviceProduct(usb_dev, &product);
+
+    switch(product) {
+	    case USB_DEVICE_ID_RAZER_BLADE_STEALTH_LATE_2016:
+	    case USB_DEVICE_ID_RAZER_BLADE_PRO_LATE_2016:
+	    case USB_DEVICE_ID_RAZER_BLADE_QHD:
+	    case USB_DEVICE_ID_RAZER_BLADE_LATE_2016:
+	        return 1;
+	    default:
+	        return 0;
+    }
+}
+
+/**
+ * Read device file "set_logo"
+ *
+ * Sets the logo lighting state to the ASCII number written to this file.
+ */
+int razer_attr_read_set_logo(IOUSBDeviceInterface **usb_dev, char *buf, int count) {
+    struct razer_report report = razer_chroma_standard_get_led_effect(VARSTORE, LOGO_LED);
+    struct razer_report response = get_empty_razer_report();
+    int state;
+
+    // Blade laptops don't use effect for logo on/off, and mode 2 ("blink") is technically unsupported.
+    if (is_blade_laptop(usb_dev)) {
+        report = razer_chroma_standard_get_led_state(VARSTORE, LOGO_LED);
+    }
+
+    response = razer_send_payload(usb_dev, &report);
+    state = response.arguments[2];
+
+    if (has_inverted_led_state(usb_dev) && (state == 0 || state == 1)) {
+        state = !state;
+    }
+
+    return sprintf(buf, "%d\n", state);
+}
+
+
 /**
  * Write device file "set_logo"
  *
@@ -492,6 +533,10 @@ int razer_attr_write_set_logo(IOUSBDeviceInterface **usb_dev, const char *buf, i
     unsigned char state = (unsigned char)strtol(buf, NULL, 10);
     struct razer_report report = {0};
     
+	if (has_inverted_led_state(usb_dev) && (state == 0 || state == 1)) {
+    	state = !state;
+	}
+
     // Blade laptops are... different. They use state instead of effect.
     // Note: This does allow setting of mode 2 ("blink"), but this is an undocumented feature.
     if (is_blade_laptop(usb_dev) && (state == 0 || state == 1)) {
@@ -504,6 +549,7 @@ int razer_attr_write_set_logo(IOUSBDeviceInterface **usb_dev, const char *buf, i
     
     return count;
 }
+
 
 /**
  * Write device file "mode_custom"
@@ -642,7 +688,7 @@ int razer_get_report(IOUSBDeviceInterface **usb_dev, struct razer_report *reques
 			break;		
 	}
 	
-    return razer_get_usb_response(usb_dev, report_index, request_report, response_index, response_report);
+    return razer_get_usb_response(usb_dev, report_index, request_report, response_index, response_report, RAZER_BLACKWIDOW_CHROMA_WAIT_MIN_US);
 }
 
 /**
