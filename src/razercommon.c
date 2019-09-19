@@ -45,7 +45,7 @@ IOReturn razer_send_control_msg(IOUSBDeviceInterface **dev, void const *data, ui
  *
  * Returns kIOReturnSuccess when successful
  */
-IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report, int wait_min) {
+IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, struct razer_report* request_report, uint response_index, struct razer_report* response_report, int wait_us) {
     IOReturn retval;
     char buffer[sizeof(struct razer_report)];
     
@@ -59,7 +59,7 @@ IOReturn razer_get_usb_response(IOUSBDeviceInterface **dev, uint report_index, s
         return retval;
     }
 
-    usleep(wait_min);
+    usleep(wait_us);
     
     IOUSBDevRequest request;
     

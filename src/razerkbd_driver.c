@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "razerkbd_driver.h"
 #include "razerchromacommon.h"
@@ -355,6 +356,19 @@ int razer_attr_read_tartarus_profile_led_blue(IOUSBDeviceInterface **usb_dev, ch
 }
 
 /**
+ * Read device file "get_firmware_version"
+ *
+ * Returns a string
+ */
+int razer_attr_read_get_firmware_version(IOUSBDeviceInterface **usb_dev, char *buf) {
+    struct razer_report report = razer_chroma_standard_get_firmware_version();
+    struct razer_report response_report = razer_send_payload(usb_dev, &report);
+
+ 	return sprintf(buf, "v%d.%d\n", response_report.arguments[0], response_report.arguments[1]);
+ }
+
+
+/**
  * Write device file "mode_none"
  *
  * No keyboard effect is activated whenever this file is written to
@@ -447,9 +461,8 @@ int razer_attr_write_mode_static(IOUSBDeviceInterface **usb_dev, const char *buf
 * 1 byte, speed
 */
 int razer_attr_write_mode_starlight(IOUSBDeviceInterface **usb_dev, const char *buf, int count) {
-    struct razer_rgb rgb1 = {.r = 0x00, .g = 0xFF, .b = 0x00};
     struct razer_report report;
-    report = razer_chroma_standard_matrix_effect_starlight_single(VARSTORE, BACKLIGHT_LED, 0x01, &rgb1);
+    report = razer_chroma_standard_matrix_effect_starlight_single(VARSTORE, BACKLIGHT_LED, buf[0], (struct razer_rgb*)&buf[1]);
     razer_send_payload(usb_dev, &report);
     
     return count;
@@ -708,8 +721,8 @@ struct razer_report razer_send_payload(IOUSBDeviceInterface **dev, struct razer_
            response_report.command_class != request_report->command_class ||
            response_report.command_id.id != request_report->command_id.id) {
             printf("Response doesnt match request\n");
-//        } else if (response_report.status == RAZER_CMD_BUSY) {
-//            printf("Device is busy\n");
+        } else if (response_report.status == RAZER_CMD_BUSY) {
+            printf("Device is busy\n");
         } else if (response_report.status == RAZER_CMD_FAILURE) {
             printf("Command failed\n");
         } else if (response_report.status == RAZER_CMD_NOT_SUPPORTED) {
