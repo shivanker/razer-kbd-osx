@@ -721,8 +721,8 @@ struct razer_report razer_send_payload(IOUSBDeviceInterface **dev, struct razer_
            response_report.command_class != request_report->command_class ||
            response_report.command_id.id != request_report->command_id.id) {
             printf("Response doesnt match request\n");
-        } else if (response_report.status == RAZER_CMD_BUSY) {
-            printf("Device is busy\n");
+//        } else if (response_report.status == RAZER_CMD_BUSY) {
+//            printf("Device is busy\n");
         } else if (response_report.status == RAZER_CMD_FAILURE) {
             printf("Command failed\n");
         } else if (response_report.status == RAZER_CMD_NOT_SUPPORTED) {

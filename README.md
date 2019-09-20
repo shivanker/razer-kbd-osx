@@ -45,6 +45,7 @@ Where <command> is one of:
 
    brightness                  # Display the current brightness value.
    brightness <value>          # Sets the brightness to value: 0 - 255
+   brightness {up|down}        # Increases or decreases the brightness
 
 Note: <R G B> custom colours are specified with three numbers representing
 RED, GREEN and BLUE. Each number ranges from 0 (0%) to 255 (100%).

@@ -103,6 +103,7 @@ void printUsage() {
 	"\n" \
 	"   brightness                  # Display the current brightness value.\n" \
 	"   brightness <value>          # Sets the brightness to value: 0 - 255\n" \
+	"   brightness {up|down}        # Increases or decreases the brightness\n" \
 	"\n" \
 	"Note: <R G B> custom colours are specified with three numbers representing\n" \
 	"RED, GREEN and BLUE. Each number ranges from 0 (0%%) to 255 (100%%).\n" \
@@ -237,7 +238,7 @@ int main(int argc, const char * argv[]) {
 		}
 		razer_attr_write_mode_wave(dev, buf, 0);
 	} else if (strcmp("logo", cmd) == 0) {
-		if (argc - 2 ==0) {
+		if (argc - 2 == 0) {
 			// Retrieve the current logo on/off state
 			char buf[4] = {0};
 			razer_attr_read_set_logo(dev, buf, 0);
@@ -260,13 +261,23 @@ int main(int argc, const char * argv[]) {
 			return -1;
 		}
 	} else if (strcmp("brightness", cmd) == 0) {
-		if (argc - 2 ==0) {
-			// Retrieve the current brightness state
-			char buf[4] = {0};
-			razer_attr_read_set_brightness(dev, buf);
- 			printf("%s", buf);
+		char buf[4] = {0};
+		razer_attr_read_set_brightness(dev, buf);
+		if (argc - 2 == 0) {
+			// Display the current brightness
+ 			printf("%s", buf); 
 		} else if (argc - 2 == 1) {
-			razer_attr_write_set_brightness(dev, argv[2], 0);
+			// Changing the brightness
+			if (strcmp(argv[2], "up") == 0 || strcmp(argv[2], "down") == 0) {
+				bool up = strcmp(argv[2], "up") == 0;
+				int val = strtol(buf, NULL, 10) + (up ? 16 : -16);
+				if (val < 0) val = 0;
+				if (val > 255) val = 255;
+				sprintf(buf, "%d", val);
+				razer_attr_write_set_brightness(dev, buf, 0);
+			} else {
+				razer_attr_write_set_brightness(dev, argv[2], 0);
+			}
 		} else {
 			printf("-- Incorrect number of args for command: %s\n\n", cmd);
 			printUsage();
