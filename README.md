@@ -43,6 +43,8 @@ Where <command> is one of:
    logo                        # Display the current logo state.
    logo {off|on}               # Turn the back logo off or on.
 
+   fnkey {off|on}              # Use 'fn' key to access F1-F12 keys.
+
    brightness                  # Display the current brightness value.
    brightness <value>          # Sets the brightness to value: 0 - 255
    brightness {up|down}        # Increases or decreases the brightness

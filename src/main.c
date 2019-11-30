@@ -101,6 +101,8 @@ void printUsage() {
 	"   logo                        # Display the current logo state.\n" \
 	"   logo {off|on}               # Turn the back logo off or on.\n" \
 	"\n" \
+	"   fnkey {off|on}              # Use 'fn' key to access F1-F12 keys.\n" \
+	"\n" \
 	"   brightness                  # Display the current brightness value.\n" \
 	"   brightness <value>          # Sets the brightness to value: 0 - 255\n" \
 	"   brightness {up|down}        # Increases or decreases the brightness\n" \
@@ -255,6 +257,24 @@ int main(int argc, const char * argv[]) {
 				return -1;
 			}
 			razer_attr_write_set_logo(dev, buf, 0);
+		} else {
+			printf("-- Incorrect number of args for command: %s\n\n", cmd);
+			printUsage();
+			return -1;
+		}
+	} else if (strcmp("fnkey", cmd) == 0) {
+		if (argc - 2 == 1) {
+			char *buf = "1";
+			if (strcmp("on", argv[2]) == 0) {
+				buf = "1";
+			} else if (strcmp("off", argv[2]) == 0) {
+				buf = "0";
+			} else {
+				printf("-- Unrecognized argument for command: %s\n\n", argv[2]);
+				printUsage();
+				return -1;
+			}
+			razer_attr_write_set_fn_toggle(dev, buf, 0);
 		} else {
 			printf("-- Incorrect number of args for command: %s\n\n", cmd);
 			printUsage();
