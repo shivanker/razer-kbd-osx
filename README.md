@@ -1,4 +1,4 @@
-# osx-razer-led
+# razer-kbd-osx
 Command-line application for MacOS to control lights on Razer keyboards. Supports various effects on the keyboard.
 
 Only the Xcode command-line tools are needed to build and run this project. Install Xcode command-line tools by running:
