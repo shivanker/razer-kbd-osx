@@ -17,7 +17,8 @@
 #define __HID_RAZER_KBD_H
 
 #define USB_DEVICE_ID_RAZER_BLACKWIDOW_ULTIMATE_2012 0x010D
-// 2011 or so edition, see https://web.archive.org/web/20111113132427/http://store.razerzone.com:80/store/razerusa/en_US/pd/productID.235228400/categoryId.49136200/parentCategoryId.35156900
+// 2011 or so edition, see
+// https://web.archive.org/web/20111113132427/http://store.razerzone.com:80/store/razerusa/en_US/pd/productID.235228400/categoryId.49136200/parentCategoryId.35156900
 #define USB_DEVICE_ID_RAZER_BLACKWIDOW_STEALTH_EDITION 0x010E
 #define USB_DEVICE_ID_RAZER_ANANSI 0x010F
 #define USB_DEVICE_ID_RAZER_NOSTROMO 0x0111
@@ -80,29 +81,25 @@
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_REACTIVE 2
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_BREATH 3
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_SPECTRUM 4
-#define RAZER_BLACKWIDOW_CHROMA_EFFECT_CUSTOM 5 // draw frame
+#define RAZER_BLACKWIDOW_CHROMA_EFFECT_CUSTOM 5  // draw frame
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_STATIC 6
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_CLEAR_ROW 8
 
 #define RAZER_BLACKWIDOW_ULTIMATE_2016_EFFECT_STARLIGHT 0x19
 
-
-#define RAZER_BLACKWIDOW_CHROMA_EFFECT_SET_KEYS 9 //update profile needs to be called after setting keys to reflect changes
+#define RAZER_BLACKWIDOW_CHROMA_EFFECT_SET_KEYS \
+  9  // update profile needs to be called after setting keys to reflect changes
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_RESET 10
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_UNKNOWN 11
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_UNKNOWN2 12
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_UNKNOWN3 13
 #define RAZER_BLACKWIDOW_CHROMA_EFFECT_UNKNOWN4 14
 
-
 #define RAZER_BLACKWIDOW_CHROMA_ROW_LEN 0x16
 #define RAZER_BLACKWIDOW_CHROMA_ROWS_NUM 6
 
-
 #define RAZER_STEALTH_ROW_LEN 0x10
 #define RAZER_STEALTH_ROWS_NUM 6
-
-
 
 #define RAZER_BLACKWIDOW_CHROMA_WAIT_MS 1
 #define RAZER_BLACKWIDOW_CHROMA_WAIT_MIN_US 600
@@ -111,13 +108,12 @@
 #define RAZER_FIREFLY_WAIT_MIN_US 900
 #define RAZER_FIREFLY_WAIT_MAX_US 1000
 
-
 // struct razer_kbd_device {
 //     IOUSBDeviceInterface **usbdev;
 //     unsigned int fn_on;
 //     char name[128];
 //     char phys[64];
-    
+
 //     unsigned char block_keys[3];
 //     unsigned char left_alt_on;
 // };
@@ -125,27 +121,49 @@
 bool is_blade_laptop(IOUSBDeviceInterface **usb_dev);
 ssize_t razer_attr_read_device_type(IOUSBDeviceInterface **usb_dev, char *buf);
 ssize_t razer_attr_read_mode_game(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_write_mode_macro(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_macro_effect(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_read_mode_macro_effect(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_write_mode_pulsate(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
+ssize_t razer_attr_write_mode_macro(IOUSBDeviceInterface **usb_dev,
+                                    const char *buf, int count);
+ssize_t razer_attr_write_mode_macro_effect(IOUSBDeviceInterface **usb_dev,
+                                           const char *buf, int count);
+ssize_t razer_attr_read_mode_macro_effect(IOUSBDeviceInterface **usb_dev,
+                                          char *buf);
+ssize_t razer_attr_write_mode_pulsate(IOUSBDeviceInterface **usb_dev,
+                                      const char *buf, int count);
 ssize_t razer_attr_read_mode_pulsate(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_read_tartarus_profile_led_red(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_read_tartarus_profile_led_green(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_read_tartarus_profile_led_blue(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_read_get_firmware_version(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_write_mode_none(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_wave(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_spectrum(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_reactive(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_static(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_starlight(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_breath(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_read_set_logo(IOUSBDeviceInterface **usb_dev, char *buf, int count);
-ssize_t razer_attr_write_set_logo(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_mode_custom(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_set_fn_toggle(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_write_set_brightness(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
-ssize_t razer_attr_read_set_brightness(IOUSBDeviceInterface **usb_dev, char *buf);
-ssize_t razer_attr_write_matrix_custom_frame(IOUSBDeviceInterface **usb_dev, const char *buf, int count);
+ssize_t razer_attr_read_tartarus_profile_led_red(IOUSBDeviceInterface **usb_dev,
+                                                 char *buf);
+ssize_t razer_attr_read_tartarus_profile_led_green(
+    IOUSBDeviceInterface **usb_dev, char *buf);
+ssize_t razer_attr_read_tartarus_profile_led_blue(
+    IOUSBDeviceInterface **usb_dev, char *buf);
+ssize_t razer_attr_read_get_firmware_version(IOUSBDeviceInterface **usb_dev,
+                                             char *buf);
+ssize_t razer_attr_write_mode_none(IOUSBDeviceInterface **usb_dev,
+                                   const char *buf, int count);
+ssize_t razer_attr_write_mode_wave(IOUSBDeviceInterface **usb_dev,
+                                   const char *buf, int count);
+ssize_t razer_attr_write_mode_spectrum(IOUSBDeviceInterface **usb_dev,
+                                       const char *buf, int count);
+ssize_t razer_attr_write_mode_reactive(IOUSBDeviceInterface **usb_dev,
+                                       const char *buf, int count);
+ssize_t razer_attr_write_mode_static(IOUSBDeviceInterface **usb_dev,
+                                     const char *buf, int count);
+ssize_t razer_attr_write_mode_starlight(IOUSBDeviceInterface **usb_dev,
+                                        const char *buf, int count);
+ssize_t razer_attr_write_mode_breath(IOUSBDeviceInterface **usb_dev,
+                                     const char *buf, int count);
+ssize_t razer_attr_read_set_logo(IOUSBDeviceInterface **usb_dev, char *buf,
+                                 int count);
+ssize_t razer_attr_write_set_logo(IOUSBDeviceInterface **usb_dev,
+                                  const char *buf, int count);
+ssize_t razer_attr_write_mode_custom(IOUSBDeviceInterface **usb_dev,
+                                     const char *buf, int count);
+ssize_t razer_attr_write_set_fn_toggle(IOUSBDeviceInterface **usb_dev,
+                                       const char *buf, int count);
+ssize_t razer_attr_write_set_brightness(IOUSBDeviceInterface **usb_dev,
+                                        const char *buf, int count);
+ssize_t razer_attr_read_set_brightness(IOUSBDeviceInterface **usb_dev,
+                                       char *buf);
+ssize_t razer_attr_write_matrix_custom_frame(IOUSBDeviceInterface **usb_dev,
+                                             const char *buf, int count);
 #endif

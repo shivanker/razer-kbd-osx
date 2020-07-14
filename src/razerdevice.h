@@ -4,8 +4,8 @@
 //
 //
 
-#include <IOKit/usb/IOUSBLib.h>
 #include <IOKit/IOCFPlugIn.h>
+#include <IOKit/usb/IOUSBLib.h>
 #include <stdio.h>
 
 #include "razerkbd_driver.h"
@@ -20,5 +20,5 @@
 
 bool is_keyboard(IOUSBDeviceInterface **dev);
 bool is_razer_device(IOUSBDeviceInterface **dev);
-IOUSBDeviceInterface** getRazerUSBDeviceInterface();
+IOUSBDeviceInterface **getRazerUSBDeviceInterface();
 void closeRazerUSBDeviceInterface(IOUSBDeviceInterface **dev);
