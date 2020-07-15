@@ -127,7 +127,7 @@ int main(int argc, const char *argv[]) {
     }
     razer_attr_write_mode_breath(dev, buf, count);
   } else if (strcmp("starlight", cmd) == 0) {
-    char buf[4] = {1, 0, 0xff, 0};  // Speed, R, G, B
+    char buf[7] = {1, 0, 0xff, 0, 0xff, 0x80, 0};  // Speed, {R, G, B}x2
     if (argc - 2 == 0) {
       // Defaults are fine
     } else if (argc - 2 == 1) {
@@ -137,12 +137,19 @@ int main(int argc, const char *argv[]) {
       buf[1] = strtol(argv[3], NULL, 10);
       buf[2] = strtol(argv[4], NULL, 10);
       buf[3] = strtol(argv[5], NULL, 10);
+    } else if (argc - 2 == 7) {
+      buf[0] = strtol(argv[2], NULL, 10);
+      buf[1] = strtol(argv[3], NULL, 10);
+      buf[2] = strtol(argv[4], NULL, 10);
+      buf[3] = strtol(argv[5], NULL, 10);
+      buf[4] = strtol(argv[6], NULL, 10);
+      buf[5] = strtol(argv[7], NULL, 10);
     } else {
       printf("-- Incorrect number of args for command: %s\n\n", cmd);
       printUsage();
       return -1;
     }
-    razer_attr_write_mode_starlight(dev, buf, 0);
+    razer_attr_write_mode_starlight(dev, buf, 7);
   } else if (strcmp("reactive", cmd) == 0) {
     char buf[4] = {1, 0, 0xff, 0};  // Speed, R, G, B
     if (argc - 2 == 0) {

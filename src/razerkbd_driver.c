@@ -958,9 +958,24 @@ ssize_t razer_attr_write_mode_starlight(IOUSBDeviceInterface **usb_dev,
       break;
 
     default:  // BW2016 can do normal starlight
-      report = razer_chroma_standard_matrix_effect_starlight_single(
-          VARSTORE, BACKLIGHT_LED, 0x01, &rgb1);
-      razer_send_payload(usb_dev, &report);
+      if (count == 7) {
+        report = razer_chroma_standard_matrix_effect_starlight_dual(
+            VARSTORE, BACKLIGHT_LED, buf[0], (struct razer_rgb *)&buf[1],
+            (struct razer_rgb *)&buf[4]);
+        razer_send_payload(usb_dev, &report);
+      } else if (count == 4) {
+        report = razer_chroma_standard_matrix_effect_starlight_single(
+            VARSTORE, BACKLIGHT_LED, buf[0], (struct razer_rgb *)&buf[1]);
+        razer_send_payload(usb_dev, &report);
+      } else if (count == 1) {
+        report = razer_chroma_standard_matrix_effect_starlight_random(
+            VARSTORE, BACKLIGHT_LED, buf[0]);
+        razer_send_payload(usb_dev, &report);
+      } else {
+        printf(
+            "razerkbd: Starlight only accepts Speed (1byte). Speed, RGB "
+            "(4byte). Speed, RGB, RGB (7byte)");
+      }
       break;
   }
 
