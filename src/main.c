@@ -69,7 +69,7 @@ int main(int argc, const char *argv[]) {
 
   IOUSBDeviceInterface **dev = getRazerUSBDeviceInterface();
   if (dev == NULL) {
-    return -1; // Assume appropriate error message displayed during the lookup
+    return -1;  // Assume appropriate error message displayed during the lookup
   }
 
   const char *cmd = argv[1];
@@ -129,7 +129,7 @@ int main(int argc, const char *argv[]) {
     }
     razer_attr_write_mode_breath(dev, buf, count);
   } else if (strcmp("starlight", cmd) == 0) {
-    char buf[7] = {1, 0, 0xff, 0, 0xff, 0x80, 0}; // Speed, {R, G, B}x2
+    char buf[7] = {1, 0, 0xff, 0, 0xff, 0x80, 0};  // Speed, {R, G, B}x2
     if (argc - 2 == 0) {
       // Defaults are fine
     } else if (argc - 2 == 1) {
@@ -153,7 +153,7 @@ int main(int argc, const char *argv[]) {
     }
     razer_attr_write_mode_starlight(dev, buf, 7);
   } else if (strcmp("reactive", cmd) == 0) {
-    char buf[4] = {1, 0, 0xff, 0}; // Speed, R, G, B
+    char buf[4] = {1, 0, 0xff, 0};  // Speed, R, G, B
     if (argc - 2 == 0) {
       // Defaults are fine
     } else if (argc - 2 == 4) {
@@ -241,10 +241,8 @@ int main(int argc, const char *argv[]) {
       if (strcmp(argv[2], "up") == 0 || strcmp(argv[2], "down") == 0) {
         bool up = strcmp(argv[2], "up") == 0;
         int val = strtol(buf, NULL, 10) + (up ? 16 : -16);
-        if (val < 0)
-          val = 0;
-        if (val > 255)
-          val = 255;
+        if (val < 0) val = 0;
+        if (val > 255) val = 255;
         sprintf(buf, "%d", val);
         razer_attr_write_set_brightness(dev, buf, 0);
       } else {
