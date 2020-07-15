@@ -9,12 +9,12 @@ Usage:
 
 1. Clone the repo
 2. Build the project by typing `make`
-3. Run the `osx-razer-led` program to get the effect you want.
+3. Run the `razer-kbd-osx` program to get the effect you want.
 
 Currently supported effects:
 
 ```
-usage: osx-razer-led <command> [options]
+usage: razer-kbd-osx <command> [options]
 Where <command> is one of:
 
    info                        # Display some keyboard information.
@@ -50,9 +50,9 @@ Where <command> is one of:
 Note: <R G B> custom colours are specified with three numbers representing
 RED, GREEN and BLUE. Each number ranges from 0 (0%) to 255 (100%).
 
-   eg. osx-razer-led static 255 100 50
-   eg. osx-razer-led breathe 255 0 0 0 0 255
-   eg. osx-razer-led starlight 1 255 255 255
+   eg. razer-kbd-osx static 255 100 50
+   eg. razer-kbd-osx breathe 255 0 0 0 0 255
+   eg. razer-kbd-osx starlight 1 255 255 255
 
 Note: <speed> values range from 1 to 3. 1 is fast, 3 is slow.
 ```

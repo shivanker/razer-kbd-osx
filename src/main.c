@@ -15,7 +15,7 @@
 
 void printUsage() {
   printf(
-      "usage: osx-razer-led <command> [options]\n"
+      "usage: razer-kbd-osx <command> [options]\n"
       "Where <command> is one of:\n"
       "\n"
       "   info                        # Display some keyboard information.\n"
@@ -31,6 +31,8 @@ void printUsage() {
       "   starlight                   # Twinkling green stars\n"
       "   starlight <speed>           # Set twinkle speed: 1,2,3\n"
       "   starlight <speed> <R G B>   # Custom twinkle speed and colour.\n"
+      "   starlight <speed> <R G B> <R G B>  \n"
+      "                               # Custom twinkle speed and two colours.\n"
       "\n"
       "   reactive                    # Keys light green and fade when typed.\n"
       "   reactive <speed> <R G B>    # Custom react speed and colour.\n"
@@ -52,9 +54,9 @@ void printUsage() {
       "representing\n"
       "RED, GREEN and BLUE. Each number ranges from 0 (0%%) to 255 (100%%).\n"
       "\n"
-      "   eg. osx-razer-led static 255 100 50\n"
-      "   eg. osx-razer-led breathe 255 0 0 0 0 255\n"
-      "   eg. osx-razer-led starlight 1 255 255 255\n"
+      "   eg. razer-kbd-osx static 255 100 50\n"
+      "   eg. razer-kbd-osx breathe 255 0 0 0 0 255\n"
+      "   eg. razer-kbd-osx starlight 1 255 255 255\n"
       "\n"
       "Note: <speed> values range from 1 to 3. 1 is fast, 3 is slow.\n\n");
 }
@@ -67,7 +69,7 @@ int main(int argc, const char *argv[]) {
 
   IOUSBDeviceInterface **dev = getRazerUSBDeviceInterface();
   if (dev == NULL) {
-    return -1;  // Assume appropriate error message displayed during the lookup
+    return -1; // Assume appropriate error message displayed during the lookup
   }
 
   const char *cmd = argv[1];
@@ -127,7 +129,7 @@ int main(int argc, const char *argv[]) {
     }
     razer_attr_write_mode_breath(dev, buf, count);
   } else if (strcmp("starlight", cmd) == 0) {
-    char buf[7] = {1, 0, 0xff, 0, 0xff, 0x80, 0};  // Speed, {R, G, B}x2
+    char buf[7] = {1, 0, 0xff, 0, 0xff, 0x80, 0}; // Speed, {R, G, B}x2
     if (argc - 2 == 0) {
       // Defaults are fine
     } else if (argc - 2 == 1) {
@@ -151,7 +153,7 @@ int main(int argc, const char *argv[]) {
     }
     razer_attr_write_mode_starlight(dev, buf, 7);
   } else if (strcmp("reactive", cmd) == 0) {
-    char buf[4] = {1, 0, 0xff, 0};  // Speed, R, G, B
+    char buf[4] = {1, 0, 0xff, 0}; // Speed, R, G, B
     if (argc - 2 == 0) {
       // Defaults are fine
     } else if (argc - 2 == 4) {
@@ -239,8 +241,10 @@ int main(int argc, const char *argv[]) {
       if (strcmp(argv[2], "up") == 0 || strcmp(argv[2], "down") == 0) {
         bool up = strcmp(argv[2], "up") == 0;
         int val = strtol(buf, NULL, 10) + (up ? 16 : -16);
-        if (val < 0) val = 0;
-        if (val > 255) val = 255;
+        if (val < 0)
+          val = 0;
+        if (val > 255)
+          val = 255;
         sprintf(buf, "%d", val);
         razer_attr_write_set_brightness(dev, buf, 0);
       } else {
