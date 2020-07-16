@@ -1,15 +1,41 @@
 from libcpp cimport bool
+from libc.stdint cimport uintptr_t
 
 cdef extern from "razerlib.c":
-  void rzr_info()
-  void rzr_set_spectrum()
-  void rzr_set_wave(bool left)
+  uintptr_t rzr_init()
+  void rzr_close(uintptr_t dev)
+  void rzr_info(uintptr_t dev)
+  void rzr_set_spectrum(uintptr_t dev)
+  void rzr_set_wave(uintptr_t dev, bool left)
 
-def info():
-  rzr_info()
+class RazerDevice:
+  def __init__(self):
+    self.device = rzr_init()
 
-def spectrum():
-  rzr_set_spectrum()    
+  def __del__(self):
+    self.close()
 
-def wave(left):
-  rzr_set_wave(left)
+  def close(self):
+    if not self.device:
+      return
+    rzr_close(self.device)
+    self.device = 0
+
+  def refresh(self):
+    self.close()
+    self.__init__()
+
+  def info(self):
+    if not self.device:
+      return
+    rzr_info(self.device)
+
+  def spectrum(self):
+    if not self.device:
+      return
+    rzr_set_spectrum(self.device)
+
+  def wave(self, left = True):
+    if not self.device:
+      return
+    rzr_set_wave(self.device, left)

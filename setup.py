@@ -8,9 +8,8 @@ razer_extension = Extension(
     libraries=["razer"],
     library_dirs=["build"],
     include_dirs=["src"],
-    extra_link_args = ['-framework', 'CoreFoundation', '-framework', 'IOKit']
+    extra_link_args=['-framework', 'CoreFoundation', '-framework', 'IOKit'],
 )
-setup(
-    name="pyrazer",
-    ext_modules=cythonize([razer_extension])
-)
+setup(name="pyrazer",
+      ext_modules=cythonize([razer_extension],
+                            compiler_directives={'language_level': "3"}))
