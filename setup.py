@@ -8,6 +8,7 @@ razer_extension = Extension(
     libraries=["razer"],
     library_dirs=["build"],
     include_dirs=["src"],
+    extra_compile_args=['-Wno-deprecated'],
     extra_link_args=['-framework', 'CoreFoundation', '-framework', 'IOKit'],
 )
 setup(name="pyrazer",
