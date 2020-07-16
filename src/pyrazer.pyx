@@ -157,7 +157,7 @@ class RazerDevice:
             return
         rzr_set_wave(self.device, left)
 
-    def enable_custom(self):
+    def custom(self):
         rzr_enable_custom(self.device)
 
     def custom_key(self, key, color):
@@ -176,4 +176,4 @@ class RazerDevice:
         g = int(color[2:4], 16)
         b = int(color[4:6], 16)
         rzr_set_key_custom(self.device, row, col, r, g, b)
-        self.enable_custom()
+        self.custom()
