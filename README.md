@@ -1,17 +1,19 @@
 # razer-kbd-osx
 Command-line application for MacOS to control lights on Razer keyboards. Supports various effects on the keyboard.
+Also exposes a python API for devs to go crazy. See example.py for sample usage.
 
-Only the Xcode command-line tools are needed to build and run this project. Install Xcode command-line tools by running:
+### Prerequisites
 
-    xcode-select --install
+1. Xcode command-line tools (`$ xcode-select --install`)
+2. Cython (`$ pip3 install cython`)
 
-Usage:
+### Usage
 
 1. Clone the repo
 2. Build the project by typing `make`
 3. Run the `razer-kbd-osx` program to get the effect you want.
 
-Currently supported effects:
+### Currently supported effects
 
 ```
 usage: razer-kbd-osx <command> [options]
