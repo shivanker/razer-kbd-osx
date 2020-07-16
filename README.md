@@ -1,5 +1,5 @@
 # razer-kbd-osx
-Command-line application for MacOS to control lights on Razer keyboards. Supports various effects on the keyboard.
+Command-line application for MacOS to control lights on Razer keyboards. Supports various effects.
 Also exposes a python API for devs to go crazy. See example.py for sample usage.
 
 ### Prerequisites
