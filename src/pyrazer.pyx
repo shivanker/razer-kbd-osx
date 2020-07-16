@@ -163,15 +163,16 @@ class RazerDevice:
     def custom_key(self, key, color):
         if not self.device:
             return
-        if not isinstance(key, Key):
-            print('Invalid key code.')
-            return
+        if isinstance(key, Key):
+            key = key.value
+        if len(key) != 2:
+          print ('Invalid key.')
         if len(color) != 6:
             print('Invalid color.')
             return
 
-        row = key.value[0]
-        col = key.value[1]
+        row = key[0]
+        col = key[1]
         r = int(color[0:2], 16)
         g = int(color[2:4], 16)
         b = int(color[4:6], 16)
