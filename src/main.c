@@ -258,8 +258,6 @@ int main(int argc, const char *argv[]) {
     printUsage();
   }
 
-  (*dev)->USBDeviceClose(dev);
-  (*dev)->Release(dev);
-
+  closeRazerUSBDeviceInterface(dev);
   return 0;
 }
