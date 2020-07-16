@@ -1,6 +1,8 @@
 import pyrazer
 import time
 
+from pyrazer import Key
+
 kbd = pyrazer.RazerDevice()
 kbd.wave()
 time.sleep(0.5)
