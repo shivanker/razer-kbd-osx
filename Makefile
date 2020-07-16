@@ -9,11 +9,14 @@ OBJECTS := $(patsubst $(SRC)/%.c, $(OUT)/%.o, $(SOURCES))
 
 all: $(TARGET) pyrazer
 
-install: $(TARGET)
+install: $(TARGET) pyrazer
+	mkdir -p ~/bin
 	cp $(TARGET) ~/bin/
+	python3 setup.py install && rm -f $(SRC)/pyrazer.c || rm -f $(SRC)/pyrazer.c
 
 clean:
-	rm -rf $(OUT) $(TARGET) pyrazer.cpython-*
+	python3 setup.py clean
+	rm -rf $(OUT) $(TARGET) $(SRC)/pyrazer.c pyrazer.cpython-*
 
 $(TARGET): $(OBJECTS)
 	$(CC) -framework CoreFoundation -framework IOKit -o $@ $^
